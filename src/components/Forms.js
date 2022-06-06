@@ -4,9 +4,10 @@ import { useState, useRef } from 'react'
 export const InputField = () => {
   const [inputText, setInputText] = useState('')
 
-  const handleChange = (e) => {
+  const handleChange = (event) => {
     // I want to update the state of inputText
-    setInputText(e.target.value)
+    console.log(event)
+    setInputText(event.target.value)
   }
 
   return (

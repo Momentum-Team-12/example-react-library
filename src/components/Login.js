@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import '../App.css'
+import { Navigate } from 'react-router-dom'
 
 export default function Login({ setAuth, isLoggedIn }) {
   const [username, setUsername] = useState('')
@@ -10,6 +11,7 @@ export default function Login({ setAuth, isLoggedIn }) {
   const handleLogin = (event) => {
     // prevent the default action of the form, which is to make a request
     event.preventDefault()
+    console.log(event)
     // clear errors since we could be re-submitting form data
     setError('')
     // Make an ajax request to the backend's URL for login
@@ -24,6 +26,10 @@ export default function Login({ setAuth, isLoggedIn }) {
         setAuth(username, res.data.auth_token)
       })
       .catch((e) => setError(e.message))
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to="/" />
   }
 
   return (

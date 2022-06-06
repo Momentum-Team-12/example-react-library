@@ -1,23 +1,35 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-export const BookDetail = ({ token, bookId }) => {
+export const BookDetail = ({ token }) => {
   const [book, setBook] = useState(null)
+  const { bookPk } = useParams()
 
   useEffect(() => {
     axios
-      .get(`https://drf-library-api.herokuapp.com/api/books/${bookId}`, {
+      .get(`https://drf-library-api.herokuapp.com/api/books/${bookPk}`, {
         headers: {
           Authorization: `Token ${token}`,
         },
       })
       .then((res) => {
         setBook(res.data)
+        // slugify res.data.title
+        // programmatically change the url here
       })
-  }, [bookId, token])
+  }, [bookPk, token])
+
+  // if (!token) {
+  //   return <Navigate to="/login" />
+  // }
 
   return (
     <>
+      <div>
+        <Link to="/">Go Back</Link>
+      </div>
       {book && (
         <>
           <div className="book content container-box" id={book.pk}>

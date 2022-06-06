@@ -1,6 +1,9 @@
 import useLocalStorageState from 'use-local-storage-state'
 import Login from './components/Login'
 import { BookList } from './components/BookList'
+import { BookDetail } from './components/BookDetail'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import NavBar from './components/NavBar'
 
 const App = () => {
   //use local storage to keep this token hanging around
@@ -17,16 +20,27 @@ const App = () => {
 
   const isLoggedIn = username && token
 
-  if (!isLoggedIn) {
-    return <Login setAuth={setAuth} />
+  const handleLogout = () => {
+    setAuth('', '')
   }
 
   return (
     <>
-      <header className="header">
-        <h1>Books</h1>
-      </header>
-      <BookList token={token} />
+      <Router>
+        <header className="header container">
+          <NavBar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+        </header>
+        <Routes>
+          <Route path="/" element={<BookList token={token} />} />
+          <Route path="/books/:bookPk" element={<BookDetail token={token} />} />
+          <Route
+            path="/login"
+            element={<Login setAuth={setAuth} isLoggedIn={isLoggedIn} />}
+          />
+        </Routes>
+      </Router>
+
+      {/*  */}
     </>
   )
 }
