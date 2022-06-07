@@ -43,17 +43,16 @@ const App = () => {
           <NavBar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
         </header>
         <Routes>
-          {isLoggedIn ? (
-            <Route
-              path="/"
-              element={<BookList token={token} isLoggedIn={isLoggedIn} />}
-            />
-          ) : (
-            <Route
-              path="/login"
-              element={<Login setAuth={setAuth} isLoggedIn={isLoggedIn} />}
-            />
-          )}
+          <Route
+            path="/"
+            element={
+              isLoggedIn ? (
+                <BookList token={token} isLoggedIn={isLoggedIn} />
+              ) : (
+                <Login setAuth={setAuth} isLoggedIn={isLoggedIn} />
+              )
+            }
+          />
           <Route path="/books/:bookPk" element={<BookDetail token={token} />} />
           <Route
             path="/login"
