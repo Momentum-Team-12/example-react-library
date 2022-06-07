@@ -4,6 +4,7 @@ import { BookList } from './components/BookList'
 import { BookDetail } from './components/BookDetail'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import NavBar from './components/NavBar'
+import axios from 'axios'
 
 const App = () => {
   //use local storage to keep this token hanging around
@@ -21,7 +22,18 @@ const App = () => {
   const isLoggedIn = username && token
 
   const handleLogout = () => {
-    setAuth('', '')
+    // log out on the server
+    axios
+      .post(
+        'https://drf-library-api.herokuapp.com/auth/token/logout',
+        {},
+        {
+          headers: { Authorization: `token ${token}` },
+        }
+      )
+      .then((res) => {
+        setAuth('', '')
+      })
   }
 
   return (
@@ -31,7 +43,17 @@ const App = () => {
           <NavBar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
         </header>
         <Routes>
-          <Route path="/" element={<BookList token={token} />} />
+          {isLoggedIn ? (
+            <Route
+              path="/"
+              element={<BookList token={token} isLoggedIn={isLoggedIn} />}
+            />
+          ) : (
+            <Route
+              path="/login"
+              element={<Login setAuth={setAuth} isLoggedIn={isLoggedIn} />}
+            />
+          )}
           <Route path="/books/:bookPk" element={<BookDetail token={token} />} />
           <Route
             path="/login"

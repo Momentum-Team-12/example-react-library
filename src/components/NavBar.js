@@ -32,6 +32,16 @@ const NavBar = ({ handleLogout, isLoggedIn }) => {
               Log Out
             </Link>
           )}
+          {/* Here is the structure of a ternary */}
+          {/* { checkCondition ? doThisIfTrue() : otherwiseDoThis() } */}
+          {/* You can't do this 👇 in JSX */}
+          {/* {
+            if (checkCondition) {
+              doThis()
+            } else {
+              doThisOTher()
+            }
+          } */}
         </div>
       </div>
     </nav>

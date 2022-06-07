@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { BookCard } from './BookCard'
+import { Navigate } from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-export const BookList = ({ token, setSelected }) => {
+export const BookList = ({ token, isLoggedIn }) => {
   const [books, setBooks] = useState([])
   const [bookTitles, setBookTitles] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -34,6 +35,7 @@ export const BookList = ({ token, setSelected }) => {
       />
     )
   }
+
   return (
     <div className="book-list container-box">
       {books.map((book) => (
