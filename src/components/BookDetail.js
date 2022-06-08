@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import BackButton from './BackButton'
 
 export const BookDetail = ({ token }) => {
   const [book, setBook] = useState(null)
@@ -23,9 +24,7 @@ export const BookDetail = ({ token }) => {
 
   return (
     <>
-      <div>
-        <Link to="/">Go Back</Link>
-      </div>
+      <BackButton path={'/'} />
       {book && (
         <>
           <div className="book content container-box" id={book.pk}>
