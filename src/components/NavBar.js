@@ -1,5 +1,10 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+
 const NavBar = ({ handleLogout, isLoggedIn }) => {
+  const currentLocation = useLocation()
+
   return (
     <nav
       className="navbar level"
@@ -17,32 +22,24 @@ const NavBar = ({ handleLogout, isLoggedIn }) => {
         </div>
       </div>
       <div className="level-right mr-5">
-        <div className="buttons level-item">
-          {!isLoggedIn ? (
-            <>
-              <Link to="register" className="button is-primary">
-                <strong>Sign up</strong>
+        {currentLocation.pathname !== '/login' && (
+          <div className="buttons level-item">
+            {!isLoggedIn ? (
+              <>
+                <Link to="register" className="button is-primary">
+                  <strong>Sign up</strong>
+                </Link>
+                <Link to="login" className="button is-light">
+                  Log in
+                </Link>
+              </>
+            ) : (
+              <Link to="/" className="button is-primary" onClick={handleLogout}>
+                Log Out
               </Link>
-              <Link to="login" className="button is-light">
-                Log in
-              </Link>
-            </>
-          ) : (
-            <Link to="/" className="button is-primary" onClick={handleLogout}>
-              Log Out
-            </Link>
-          )}
-          {/* Here is the structure of a ternary */}
-          {/* { checkCondition ? doThisIfTrue() : otherwiseDoThis() } */}
-          {/* You can't do this 👇 in JSX */}
-          {/* {
-            if (checkCondition) {
-              doThis()
-            } else {
-              doThisOTher()
-            }
-          } */}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </nav>
   )

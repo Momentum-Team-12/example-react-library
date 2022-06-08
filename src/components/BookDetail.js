@@ -21,10 +21,6 @@ export const BookDetail = ({ token }) => {
       })
   }, [bookPk, token])
 
-  // if (!token) {
-  //   return <Navigate to="/login" />
-  // }
-
   return (
     <>
       <div>

@@ -2,7 +2,12 @@ import useLocalStorageState from 'use-local-storage-state'
 import Login from './components/Login'
 import { BookList } from './components/BookList'
 import { BookDetail } from './components/BookDetail'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom'
 import NavBar from './components/NavBar'
 import axios from 'axios'
 
@@ -25,13 +30,14 @@ const App = () => {
     // log out on the server
     axios
       .post(
-        'https://drf-library-api.herokuapp.com/auth/token/logout',
+        'https://drf-library-api.herokuapp.com/api/auth/token/logout',
         {},
         {
           headers: { Authorization: `token ${token}` },
         }
       )
       .then((res) => {
+        // since the token has been destroyed on the server, we can remove it from state
         setAuth('', '')
       })
   }
@@ -49,7 +55,7 @@ const App = () => {
               isLoggedIn ? (
                 <BookList token={token} isLoggedIn={isLoggedIn} />
               ) : (
-                <Login setAuth={setAuth} isLoggedIn={isLoggedIn} />
+                <Navigate to="/login" />
               )
             }
           />
@@ -60,8 +66,6 @@ const App = () => {
           />
         </Routes>
       </Router>
-
-      {/*  */}
     </>
   )
 }

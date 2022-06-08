@@ -11,18 +11,16 @@ export default function Login({ setAuth, isLoggedIn }) {
   const handleLogin = (event) => {
     // prevent the default action of the form, which is to make a request
     event.preventDefault()
-    console.log(event)
     // clear errors since we could be re-submitting form data
     setError('')
     // Make an ajax request to the backend's URL for login
     // Use the username and password from state to send in the request body
     axios
-      .post('https://drf-library-api.herokuapp.com/auth/token/login', {
+      .post('https://drf-library-api.herokuapp.com/api/auth/token/login', {
         username: username,
         password: password,
       })
       .then((res) => {
-        console.log(res.data)
         setAuth(username, res.data.auth_token)
       })
       .catch((e) => setError(e.message))
@@ -33,37 +31,45 @@ export default function Login({ setAuth, isLoggedIn }) {
   }
 
   return (
-    <div className="Login">
-      <h2>Log In</h2>
+    <div className="Login container-box">
+      <h2 className="title">Log In</h2>
       {error && <div className="error">{error}</div>}
       <form onSubmit={handleLogin}>
-        <div className="field-controls">
-          <label className="input-label" htmlFor="username">
+        <div className="field">
+          <label className="label" htmlFor="username">
             Username
           </label>
-          <input
-            type="text"
-            id="username"
-            required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+          <div className="control">
+            <input
+              type="text"
+              id="username"
+              className="input"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
         </div>
 
-        <div className="field-controls">
-          <label className="input-label" htmlFor="password">
+        <div className="field">
+          <label className="label" htmlFor="password">
             Password
           </label>
-          <input
-            type="password"
-            id="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="control">
+            <input
+              type="password"
+              id="password"
+              className="input"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
         </div>
-        <div className="field-controls">
-          <button type="submit">Log in</button>
+        <div className="field">
+          <button type="submit" className="button is-primary">
+            Log in
+          </button>
         </div>
       </form>
     </div>
