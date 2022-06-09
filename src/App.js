@@ -46,7 +46,11 @@ const App = () => {
     <>
       <Router>
         <header className="header container">
-          <NavBar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+          <NavBar
+            isLoggedIn={isLoggedIn}
+            handleLogout={handleLogout}
+            token={token}
+          />
         </header>
         <Routes>
           <Route

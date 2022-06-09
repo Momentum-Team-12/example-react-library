@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
+import SearchForm from './SearchForm'
 
-const NavBar = ({ handleLogout, isLoggedIn }) => {
+const NavBar = ({ handleLogout, isLoggedIn, token }) => {
   const currentLocation = useLocation()
 
   return (
@@ -21,6 +22,9 @@ const NavBar = ({ handleLogout, isLoggedIn }) => {
               Books
             </Link>
           </div>
+        </div>
+        <div className="level-right m-2 ">
+          <SearchForm token={token} />
         </div>
         <div className="level-right mr-5">
           {currentLocation.pathname !== '/login' && (
