@@ -1,29 +1,28 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { BookCard } from './BookCard'
-import { Navigate } from 'react-router-dom'
+import BookForm from './BookForm'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 export const BookList = ({ token, isLoggedIn }) => {
   const [books, setBooks] = useState([])
-  const [bookTitles, setBookTitles] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [bookAdded, setBookAdded] = useState(false)
 
   useEffect(() => {
+    const url = 'https://drf-library-api.herokuapp.com/api/books'
     axios
-      .get('https://drf-library-api.herokuapp.com/api/books', {
+      .get(url, {
         headers: {
-          Authorization: `token ${token}`,
+          Authorization: `Token ${token}`,
         },
       })
       .then((res) => {
-        const bookTitles = res.data.map((obj) => obj.title)
-        setBookTitles(bookTitles)
         setBooks(res.data)
         setIsLoading(false)
       })
-  }, [token])
+  }, [token, bookAdded])
 
   if (isLoading) {
     return (
@@ -46,6 +45,7 @@ export const BookList = ({ token, isLoggedIn }) => {
           featured={book.featured}
         />
       ))}
+      <BookForm setBookAdded={setBookAdded} token={token} />
     </div>
   )
 }

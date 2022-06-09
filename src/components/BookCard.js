@@ -1,13 +1,8 @@
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-export const BookCard = ({ title, bookId, featured, setSelected }) => {
-  const handleClick = () => {
-    console.log('handleclick in BookCard')
-    console.log({ bookId })
-    setSelected(bookId)
-  }
+export const BookCard = ({ title, bookId, featured }) => {
   return (
-    <div className="book card" id={bookId} onClick={handleClick}>
+    <div className="book card" id={bookId}>
       <div className="card-content">
         <div className="content">
           <p>

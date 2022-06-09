@@ -15,8 +15,9 @@ export default function Login({ setAuth, isLoggedIn }) {
     setError('')
     // Make an ajax request to the backend's URL for login
     // Use the username and password from state to send in the request body
+    const url = 'https://drf-library-api.herokuapp.com/api/auth/token/login'
     axios
-      .post('https://drf-library-api.herokuapp.com/api/auth/token/login', {
+      .post(url, {
         username: username,
         password: password,
       })
