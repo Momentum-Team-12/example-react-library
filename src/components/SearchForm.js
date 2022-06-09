@@ -1,7 +1,11 @@
 import axios from 'axios'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 const SearchForm = ({ token }) => {
   const searchInput = useRef()
+  const navigate = useNavigate()
+  const [results, setResults] = useState(null)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -13,8 +17,25 @@ const SearchForm = ({ token }) => {
           Authorization: `Token ${token}`,
         },
       })
-      .then((res) => {})
+      .then((res) => {
+        setResults(res.data)
+      })
   }
+
+  useEffect(() => {
+    if (results) {
+      navigate('/search-results', { state: results })
+    }
+    const inputRef = searchInput.current
+    // Returning a function from a useEffect gives us the ability to "clean up"
+    // before the component renders again.
+    // https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
+    // Here, we use it to clear out the results and the search input
+    return () => {
+      setResults(null)
+      inputRef.value = ''
+    }
+  }, [navigate, results])
 
   return (
     <form onSubmit={handleSubmit} className="level">

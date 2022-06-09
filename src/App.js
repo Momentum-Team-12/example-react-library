@@ -9,6 +9,7 @@ import {
   Navigate,
 } from 'react-router-dom'
 import NavBar from './components/NavBar'
+import SearchResults from './components/SearchResults'
 import axios from 'axios'
 
 const App = () => {
@@ -63,6 +64,7 @@ const App = () => {
               )
             }
           />
+          <Route path="/search-results" element={<SearchResults />} />
           <Route path="/books/:bookPk" element={<BookDetail token={token} />} />
           <Route
             path="/login"

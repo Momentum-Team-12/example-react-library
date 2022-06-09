@@ -6,7 +6,9 @@ export const BookCard = ({ title, bookId, featured }) => {
       <div className="card-content">
         <div className="content">
           <p>
-            <Link to={`books/${bookId}`}>{title}</Link>
+            <Link to={`/books/${bookId}`} replace={true}>
+              {title}
+            </Link>
             {featured && (
               <span className="icon">
                 <i className="fa-solid fa-feather-pointed"></i>
